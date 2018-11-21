@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright: Arthur Milchior <arthur@milchior.fr>
 # License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
-"""I do not like to delete cards. If some cards where reviewed and no longer exists, it is probably a sign that I made something wrong.
-However, I sometime create thoushands of new cards by accident, when I edit a card type. And I want to delete those cards without deleted the one viewed at least once.
-Hence, this add-on."""
+# feel free to contribute on https://github.com/Arthur-Milchior/anki-empty-new-cards
+# Anki add-on number: 1402327111
 
 import aqt
 from aqt import mw

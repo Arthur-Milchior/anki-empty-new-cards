@@ -2,7 +2,7 @@
 # Copyright: Arthur Milchior <arthur@milchior.fr>
 # License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 # feel free to contribute on https://github.com/Arthur-Milchior/anki-empty-new-cards
-#Anki add-on number: 1402327111
+# Anki add-on number: 1402327111
 
 import aqt
 from aqt import mw
