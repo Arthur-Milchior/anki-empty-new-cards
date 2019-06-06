@@ -4,8 +4,3 @@ if (sys.version_info > (3, 0)):
     from . import emptyNewCards21
 else:
     from . import emptyNewCards20
-
-
-    
-
-from . import 
