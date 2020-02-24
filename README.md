@@ -11,12 +11,16 @@ edit a card type. I want to be able to delete those card.
 The tradeoff I found is deleting cards only when they are new.
 If, sometime, I find and empty card, already seen, and it's not a
 mistake, I just have to suspend it, and everything is all right.
+
+I also tag notes which should have been deleted. This can be turned
+of in the configuration.
+
 ## Usage
 From main window, select "Tools">"Empty new cards". It acts similarly
 to "Empty cards".
 
 ## Internal
-This add-on redefine anki.collectino._Collection.genCards during the
+This add-on redefine anki.collection._Collection.genCards during the
 process. The new method call the previous one.
 
 The previous method is set back once the action is done.

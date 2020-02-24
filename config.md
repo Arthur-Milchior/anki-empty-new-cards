@@ -1,0 +1,1 @@
+tag empty but reviewed card: add the tag "empty_card_CARD_TYPE_NAME" where "CARD_TYPE_NAME" is the name of the card type
