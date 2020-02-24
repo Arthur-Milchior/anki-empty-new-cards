@@ -24,9 +24,6 @@ def check():
         cids = ids2str(cids)
         toDeleteCids = col.db.list(
             "select id from cards where (type=0 and (id in "+cids+"))")
-        #l =[]
-        # for id in toDeleteCids:
-        #print ("genCards: %s" %str(toDeleteCids))
         return toDeleteCids
     _Collection.genCards = genCards
     mw.onEmptyCards()
