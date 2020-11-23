@@ -19,10 +19,8 @@ from .config import getUserOption
 delete_seen_card = True
 
 def filter(diag: aqt.emptycards.EmptyCardsDialog):
-    print("filter")
     global delete_seen_card
     if delete_seen_card:
-        print("Return because we don't keep seen card")
         return
     delete_seen_card = True
     report = diag.report
@@ -32,15 +30,12 @@ def filter(diag: aqt.emptycards.EmptyCardsDialog):
         new_cids = []
         for cid in note.card_ids:
             if mw.col.db.scalar("select type from cards where id = ?", cid) == CARD_TYPE_NEW:
-                print(f"delete {cid}")
                 new_cids.append(cid)
             else:
-                print(f"keep {cid}")
                 seen_cids.append(cid)
         del note.card_ids[:]
         note.card_ids.extend(new_cids)
     for note in diag.report.notes:
-        print(f"We have note {note} with cids: {note.card_ids}")
     tag(seen_cids)
 
 gui_hooks.empty_cards_will_show.append(filter)
@@ -99,7 +94,6 @@ def tag(cids):
 def check():
     global delete_seen_card
     delete_seen_card = False
-    print("on empty card")
     mw.onEmptyCards()
 
 
