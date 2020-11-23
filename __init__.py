@@ -11,8 +11,39 @@ from anki.utils import ids2str
 from aqt import mw
 from aqt.qt import *
 from aqt.utils import tooltip
+from aqt import gui_hooks
+from anki.consts import CARD_TYPE_NEW
 
 from .config import getUserOption
+
+delete_seen_card = True
+
+def filter(diag: aqt.emptycards.EmptyCardsDialog):
+    print("filter")
+    global delete_seen_card
+    if delete_seen_card:
+        print("Return because we don't keep seen card")
+        return
+    delete_seen_card = True
+    report = diag.report
+    notes = report.notes
+    seen_cids = []
+    for note in notes:
+        new_cids = []
+        for cid in note.card_ids:
+            if mw.col.db.scalar("select type from cards where id = ?", cid) == CARD_TYPE_NEW:
+                print(f"delete {cid}")
+                new_cids.append(cid)
+            else:
+                print(f"keep {cid}")
+                seen_cids.append(cid)
+        del note.card_ids[:]
+        note.card_ids.extend(new_cids)
+    for note in diag.report.notes:
+        print(f"We have note {note} with cids: {note.card_ids}")
+    tag(seen_cids)
+
+gui_hooks.empty_cards_will_show.append(filter)
 
 
 def tag(cids):
@@ -66,25 +97,10 @@ def tag(cids):
 
 
 def check():
-    oldGenCards = _Collection.genCards
-    all_cids = []
-
-    def genCards(*args, **kwargs):
-        """Ids of cards which needs to be removed.
-
-        Generate missing cards of a note with id in nids.
-        """
-        col = mw.col
-        cids = oldGenCards(*args, **kwargs)
-        all_cids.extend(cids)
-        toDeleteCids = col.db.list(
-            "select id from cards where (type=0 and (id in "+ids2str(cids)+"))")
-        return toDeleteCids
-    _Collection.genCards = genCards
+    global delete_seen_card
+    delete_seen_card = False
+    print("on empty card")
     mw.onEmptyCards()
-    _Collection.genCards = oldGenCards
-    if getUserOption("tag empty but reviewed card", False):
-        tag_msg = tag(all_cids)
 
 
 action = QAction(aqt.mw)

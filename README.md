@@ -25,6 +25,14 @@ process. The new method call the previous one.
 
 The previous method is set back once the action is done.
 
+## Warning concerning the list of notes
+
+For technical reason, it's hard to change the list of note and card that will be deleted without a lot of work. So the
+list of cards to be deleted is not changed and contains cards already seen that won't actually be deleted. Furthermore,
+for each note with no valid card, if you decide to keep those notes, then both the first card and all seen cards will be
+kept. This is not an ideal solution, but I've not enough time and interest to improve it.
+
+
 
 ## Links, licence and credits
 
