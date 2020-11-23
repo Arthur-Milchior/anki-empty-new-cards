@@ -27,15 +27,17 @@ def filter(diag: aqt.emptycards.EmptyCardsDialog):
     notes = report.notes
     seen_cids = []
     for note in notes:
-        new_cids = []
+        note_new_cids = []
         for cid in note.card_ids:
             if mw.col.db.scalar("select type from cards where id = ?", cid) == CARD_TYPE_NEW:
-                new_cids.append(cid)
+                note_new_cids.append(cid)
             else:
                 seen_cids.append(cid)
         del note.card_ids[:]
-        note.card_ids.extend(new_cids)
-    for note in diag.report.notes:
+        note.card_ids.extend(note_new_cids)
+
+    if seen_cids:
+        report.report = f"""<i>{len(seen_cids)} cards are not seen and won't be deleted.</i><br/>{report.report}"""
     tag(seen_cids)
 
 gui_hooks.empty_cards_will_show.append(filter)
